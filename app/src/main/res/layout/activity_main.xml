@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mitlerda.aryanne.mitlerdapriceconvertor.MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/from_sub_spinner"
+        android:background="@android:color/black"
+        android:scaleX="1.2"
+        app:srcCompat="@drawable/background" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="cursive"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/from_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp" />
+        android:layout_below="@+id/textView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp" />
 
     <Spinner
         android:id="@+id/from_sub_spinner"
@@ -19,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/from_spinner"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="8dp" />
 
     <com.mitlerda.aryanne.mitlerdapriceconvertor.view.FromEditor
@@ -28,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/from_sub_spinner"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp" />
 
     <Spinner
@@ -36,7 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/from_value"
-        android:layout_marginTop="8dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp" />
 
     <Spinner
         android:id="@+id/to_sub_spinner"
@@ -44,7 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/to_spinner"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="8dp" />
 
     <TextView
@@ -55,6 +87,9 @@
         android:layout_below="@+id/to_sub_spinner"
         android:layout_marginStart="29dp"
         android:layout_marginTop="22dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="cursive"
+        android:textSize="25sp"
         android:ems="10" />
 
 </RelativeLayout>

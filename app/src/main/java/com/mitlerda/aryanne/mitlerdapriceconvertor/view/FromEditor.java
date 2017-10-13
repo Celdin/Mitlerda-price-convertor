@@ -3,6 +3,8 @@ package com.mitlerda.aryanne.mitlerdapriceconvertor.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.provider.FontsContract;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.InputType;
@@ -97,7 +99,7 @@ public class FromEditor extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int parentWidth = 1100;
+        final int parentWidth = 1000;
         final int parentHeight = 130;
         final int count = getChildCount();
         if(count > 0) {
@@ -121,7 +123,7 @@ public class FromEditor extends ViewGroup {
         if (count > 0) {
             for (int i = 0; i < count; i++) {
                 final View child = getChildAt(i);
-                int x = i * childWidth + ((i + 1) * padding);
+                int x =  i * childWidth + ((i + 1) * padding);
                 int y = padding;
                 child.layout(x, y, x + childWidth, y + childHeight);
             }
@@ -135,6 +137,7 @@ public class FromEditor extends ViewGroup {
         public DivisionEditor(Context context, String hint) {
             super(context);
             setInputType(InputType.TYPE_CLASS_NUMBER);
+            setTypeface(Typeface.create("cursive", Typeface.NORMAL));
             setHint(hint);
         }
 

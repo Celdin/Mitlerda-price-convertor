@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> monaieArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, monnaieStrs);
+                R.layout.spinner_item, monnaieStrs);
         couronneArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, couronneStrs);
+                R.layout.sub_spinner_item, couronneStrs);
         lireArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lireStrs);
+                R.layout.sub_spinner_item, lireStrs);
         markArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, markStrs);
+                R.layout.sub_spinner_item, markStrs);
 
 
         fromSpinner.setAdapter(monaieArrayAdapter);
