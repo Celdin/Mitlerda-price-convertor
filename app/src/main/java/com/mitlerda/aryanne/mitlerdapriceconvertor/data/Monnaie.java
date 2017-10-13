@@ -1,5 +1,7 @@
 package com.mitlerda.aryanne.mitlerdapriceconvertor.data;
 
+import java.math.BigDecimal;
+
 /**
  * Created by goulliarts on 25/09/2017.
  */
@@ -7,9 +9,9 @@ package com.mitlerda.aryanne.mitlerdapriceconvertor.data;
 public interface Monnaie {
     public String getNom();
 
-    public float getToCouronne();
+    public BigDecimal getToCouronne();
 
-    public float toCouronne(float value);
+    public BigDecimal toCouronne(BigDecimal value);
 
-    public float fromCouronne(float value);
+    public BigDecimal fromCouronne(BigDecimal value);
 }

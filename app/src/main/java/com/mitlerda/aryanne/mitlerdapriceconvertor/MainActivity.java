@@ -6,16 +6,21 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mitlerda.aryanne.mitlerdapriceconvertor.data.CouronneDivision;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.CouronneType;
+import com.mitlerda.aryanne.mitlerdapriceconvertor.data.Division;
+import com.mitlerda.aryanne.mitlerdapriceconvertor.data.LireDivision;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.LireType;
+import com.mitlerda.aryanne.mitlerdapriceconvertor.data.MarkDivision;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.MarkType;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.Monnaie;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.MonnaieType;
+import com.mitlerda.aryanne.mitlerdapriceconvertor.view.FromEditor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner fromSubSpinner;
     Spinner toSpinner;
     Spinner toSubSpinner;
-    EditText fromText;
+    FromEditor fromEditor;
     TextView toText;
     MonnaieType from;
     MonnaieType to;
@@ -88,10 +93,8 @@ public class MainActivity extends AppCompatActivity {
         fromSubSpinner = (Spinner) findViewById(R.id.from_sub_spinner);
         toSpinner = (Spinner) findViewById(R.id.to_spinner);
         toSubSpinner = (Spinner) findViewById(R.id.to_sub_spinner);
-        fromText = (EditText) findViewById(R.id.from_value);
+        fromEditor = (FromEditor) findViewById(R.id.from_value);
         toText = (TextView) findViewById(R.id.to_value);
-
-        fromText.setText("0");
 
         List<String> monnaieStrs = new ArrayList<>();
         List<String> couronneStrs = new ArrayList<>();
@@ -128,19 +131,37 @@ public class MainActivity extends AppCompatActivity {
 
         fromSubSpinner.setOnItemSelectedListener(new SubSpinnerListener(Entry.From));
         toSubSpinner.setOnItemSelectedListener(new SubSpinnerListener(Entry.To));
-
-        fromText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                calcul();
-                return false;
-            }
-        });
     }
 
     private void calcul() {
         if (subTo != null && subFrom != null) {
-            toText.setText(String.valueOf(subTo.fromCouronne(subFrom.toCouronne(Float.parseFloat(fromText.getText().toString())))));
+            BigDecimal value = subTo.fromCouronne(subFrom.toCouronne(fromEditor.getvalue()));
+            value.setScale(5, BigDecimal.ROUND_HALF_UP);
+            String result = "";
+            switch (to){
+                case Couronne:
+                    for(CouronneDivision division : CouronneDivision.values()){
+                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        value = result1.getValue();
+                        result = result1.getResult();
+                    }
+                    break;
+                case Lire:
+                    for(LireDivision division : LireDivision.values()){
+                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        value = result1.getValue();
+                        result = result1.getResult();
+                    }
+                    break;
+                case Mark:
+                    for(MarkDivision division : MarkDivision.values()){
+                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        value = result1.getValue();
+                        result = result1.getResult();
+                    }
+                    break;
+            }
+            toText.setText(result);
         }
     }
 
@@ -183,6 +204,14 @@ public class MainActivity extends AppCompatActivity {
                 case From:
                     setFrom(monnaieType);
                     setSubFrom(subMonnaie);
+                    fromEditor.updateField(monnaieType.getBaseDivision(), new TextView.OnEditorActionListener() {
+                        @Override
+
+                        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                            calcul();
+                            return false;
+                        }
+                    });
                     break;
                 case To:
                     setTo(monnaieType);
@@ -235,6 +264,39 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             return;
+        }
+    }
+
+    private class Result {
+        private BigDecimal value;
+        private String result;
+        private Division division;
+        private String name;
+
+        public Result(BigDecimal value, String result, Division division, String name) {
+            this.value = value;
+            this.result = result;
+            this.division = division;
+            this.name = name;
+        }
+
+        public BigDecimal getValue() {
+            return value;
+        }
+
+        public String getResult() {
+            return result;
+        }
+
+        public Result invoke() {
+            value = division.fromReference(value);
+            final int entier = value.intValue();
+            if(entier >0){
+                result += entier + " " + name + (entier>1?"s ":" ");
+                value = value.subtract(BigDecimal.valueOf(entier));
+            }
+            value = division.toReference(value);
+            return this;
         }
     }
 }

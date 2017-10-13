@@ -1,5 +1,7 @@
 package com.mitlerda.aryanne.mitlerdapriceconvertor.data;
 
+import java.math.BigDecimal;
+
 /**
  * Created by goulliarts on 25/09/2017.
  */
@@ -11,12 +13,12 @@ public enum MarkType implements Monnaie {
 
     private String nom;
 
-    private float toCouronne;
+    private BigDecimal toCouronne;
 
     MarkType(String nom, float toCouronne) {
 
         this.nom = nom;
-        this.toCouronne = toCouronne;
+        this.toCouronne = BigDecimal.valueOf(toCouronne);
     }
 
     @Override
@@ -25,17 +27,17 @@ public enum MarkType implements Monnaie {
     }
 
     @Override
-    public float getToCouronne() {
+    public BigDecimal getToCouronne() {
         return toCouronne;
     }
 
     @Override
-    public float toCouronne(float value) {
-        return value * getToCouronne();
+    public BigDecimal toCouronne(BigDecimal value) {
+        return value.multiply(getToCouronne());
     }
 
     @Override
-    public float fromCouronne(float value) {
-        return value / getToCouronne();
+    public BigDecimal fromCouronne(BigDecimal value) {
+        return value.divide(getToCouronne(), 5, BigDecimal.ROUND_HALF_UP);
     }
 }
