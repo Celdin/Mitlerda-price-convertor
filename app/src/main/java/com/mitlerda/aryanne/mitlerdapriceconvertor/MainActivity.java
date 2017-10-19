@@ -6,7 +6,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.CouronneDivision;
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         fromEditor = (FromEditor) findViewById(R.id.from_value);
         toText = (TextView) findViewById(R.id.to_value);
 
+        final ImageButton swapButton = (ImageButton) findViewById(R.id.swap_button);
+
         List<String> monnaieStrs = new ArrayList<>();
         List<String> couronneStrs = new ArrayList<>();
         List<String> lireStrs = new ArrayList<>();
@@ -131,6 +135,21 @@ public class MainActivity extends AppCompatActivity {
 
         fromSubSpinner.setOnItemSelectedListener(new SubSpinnerListener(Entry.From));
         toSubSpinner.setOnItemSelectedListener(new SubSpinnerListener(Entry.To));
+
+        swapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tmpPos = toSpinner.getSelectedItemPosition();
+                int tmpSubFromPos = fromSubSpinner.getSelectedItemPosition();
+                int tmpSubToPos = toSubSpinner.getSelectedItemPosition();
+                toSpinner.setSelection(fromSpinner.getSelectedItemPosition());
+                fromSpinner.setSelection(tmpPos);
+                toSpinner.getOnItemSelectedListener().onItemSelected(null, null, toSpinner.getSelectedItemPosition(), -1);
+                fromSpinner.getOnItemSelectedListener().onItemSelected(null, null, fromSpinner.getSelectedItemPosition(), -1);
+                fromSubSpinner.setSelection(tmpSubToPos);
+                toSubSpinner.setSelection(tmpSubFromPos);
+            }
+        });
     }
 
     private void calcul() {
@@ -200,26 +219,27 @@ public class MainActivity extends AppCompatActivity {
                     subMonnaie = MarkType.MarkPrartien;
                     break;
             }
-            switch (entry) {
-                case From:
-                    setFrom(monnaieType);
-                    setSubFrom(subMonnaie);
-                    fromEditor.updateField(monnaieType.getBaseDivision(), new TextView.OnEditorActionListener() {
-                        @Override
-
-                        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                            calcul();
-                            return false;
-                        }
-                    });
-                    break;
-                case To:
-                    setTo(monnaieType);
-                    setSubTo(subMonnaie);
+            if(!toUse.equals(subSpinner.getAdapter())) {
+                switch (entry) {
+                    case From:
+                        setFrom(monnaieType);
+                        setSubFrom(subMonnaie);
+                        fromEditor.updateField(monnaieType.getBaseDivision(), new TextView.OnEditorActionListener() {
+                            @Override
+                            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                                calcul();
+                                return false;
+                            }
+                        });
+                        break;
+                    case To:
+                        setTo(monnaieType);
+                        setSubTo(subMonnaie);
+                }
+                subSpinner.setAdapter(toUse);
+                subSpinner.invalidate();
+                calcul();
             }
-            subSpinner.setAdapter(toUse);
-            subSpinner.invalidate();
-            calcul();
         }
 
         @Override

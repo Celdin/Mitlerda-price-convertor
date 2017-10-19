@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="15dp" />
 
     <Spinner
@@ -47,7 +47,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/from_spinner"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="8dp" />
 
     <com.mitlerda.aryanne.mitlerdapriceconvertor.view.FromEditor
@@ -66,7 +66,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/from_value"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="10dp" />
 
     <Spinner
@@ -76,7 +76,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/to_spinner"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="8dp" />
 
     <TextView
@@ -91,5 +91,14 @@
         android:fontFamily="cursive"
         android:textSize="25sp"
         android:ems="10" />
+
+    <ImageButton
+        android:id="@+id/swap_button"
+        style="@android:style/Widget.Holo.Light.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/from_value"
+        android:layout_below="@id/from_value"
+        app:srcCompat="@drawable/ic_swap" />
 
 </RelativeLayout>

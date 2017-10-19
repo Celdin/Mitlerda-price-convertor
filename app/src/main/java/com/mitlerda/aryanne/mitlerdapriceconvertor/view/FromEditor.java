@@ -103,7 +103,7 @@ public class FromEditor extends ViewGroup {
         final int parentHeight = 130;
         final int count = getChildCount();
         if(count > 0) {
-            childWidth = (parentWidth / count) - (padding * (count + 1));
+            childWidth = (parentWidth / count) - (padding * count);
             childHeight = parentHeight - 2 * padding;
 
             for (int i = 0; i < count; i++) {
