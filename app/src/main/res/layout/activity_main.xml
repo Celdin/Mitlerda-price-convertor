@@ -94,11 +94,12 @@
 
     <ImageButton
         android:id="@+id/swap_button"
-        style="@android:style/Widget.Holo.Light.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/from_value"
-        android:layout_below="@id/from_value"
+        android:layout_alignBottom="@+id/from_value"
+        android:layout_alignTop="@+id/from_value"
+        android:layout_toRightOf="@+id/from_value"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_swap" />
 
 </RelativeLayout>

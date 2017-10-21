@@ -99,11 +99,11 @@ public class FromEditor extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int parentWidth = 1000;
+        final int parentWidth = 900;
         final int parentHeight = 130;
         final int count = getChildCount();
         if(count > 0) {
-            childWidth = (parentWidth / count) - (padding * count);
+            childWidth = ((parentWidth - (padding * (count + 1))) / count);
             childHeight = parentHeight - 2 * padding;
 
             for (int i = 0; i < count; i++) {
