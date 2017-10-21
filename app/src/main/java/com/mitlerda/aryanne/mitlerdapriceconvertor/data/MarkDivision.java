@@ -7,13 +7,15 @@ import java.math.BigDecimal;
  */
 
 public enum MarkDivision implements Division {
-    Schwer(1000d),
-    mark(1d);
+    Schwer(1000d, new String[] {"Schwer"}),
+    Mark(1d, new String[] {"Mark"});
 
     private BigDecimal toReference;
+    private String[] noms;
 
-    MarkDivision(double toReference) {
+    MarkDivision(double toReference, String[] noms) {
         this.toReference = BigDecimal.valueOf(toReference);
+        this.noms = noms;
     }
 
     @Override
@@ -24,5 +26,10 @@ public enum MarkDivision implements Division {
     @Override
     public BigDecimal fromReference(BigDecimal value) {
         return value.divide(toReference, 5, BigDecimal.ROUND_HALF_UP);
+    }
+
+    @Override
+    public String getNom(int index) {
+        return noms[index];
     }
 }

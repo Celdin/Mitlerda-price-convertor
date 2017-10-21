@@ -7,14 +7,16 @@ import java.math.BigDecimal;
  */
 
 public enum LireDivision implements Division {
-    Lire(1),
-    Sou(1d/20),
-    Denier(1d/240);
+    Lire(1, new String[] {"Lire", "Livre"}),
+    Sou(1d/20, new String[] {"Sou", "Shilling"}),
+    Denier(1d/240, new String[] {"Denier", "Pence"});
 
     private BigDecimal toReference;
+    private String[] noms;
 
-    LireDivision(double toReference) {
+    LireDivision(double toReference, String[] noms) {
         this.toReference = BigDecimal.valueOf(toReference);
+        this.noms = noms;
     }
 
     @Override
@@ -25,5 +27,10 @@ public enum LireDivision implements Division {
     @Override
     public BigDecimal fromReference(BigDecimal value) {
         return value.divide(toReference, 5, BigDecimal.ROUND_HALF_UP);
+    }
+
+    @Override
+    public String getNom(int index) {
+        return noms[index];
     }
 }

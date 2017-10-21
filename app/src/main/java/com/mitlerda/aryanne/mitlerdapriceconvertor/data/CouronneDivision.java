@@ -7,15 +7,17 @@ import java.math.BigDecimal;
  */
 
 public enum CouronneDivision implements Division {
-    Eude(10d),
-    Couronne(1d),
-    Déci(0.1d),
-    Cent(0.01d);
+    Eude(10d, new String[] {"Eude", "Platine"}),
+    Couronne(1d, new String[] {"Couronne", "Or"}),
+    Déci(0.1d, new String[] {"Déci", "Cuivre"}),
+    Cent(0.01d, new String[] {"Cent", "Bronze"});
 
     private BigDecimal toReference;
+    private String[] noms;
 
-    CouronneDivision(double toReference) {
+    CouronneDivision(double toReference, String[] noms) {
         this.toReference = BigDecimal.valueOf(toReference);
+        this.noms = noms;
     }
 
     @Override
@@ -26,5 +28,10 @@ public enum CouronneDivision implements Division {
     @Override
     public BigDecimal fromReference(BigDecimal value) {
         return value.divide(toReference, 5, BigDecimal.ROUND_HALF_UP);
+    }
+
+    @Override
+    public String getNom(int index) {
+        return noms[index];
     }
 }

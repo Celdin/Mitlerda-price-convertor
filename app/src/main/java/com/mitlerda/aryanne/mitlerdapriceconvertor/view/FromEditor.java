@@ -1,26 +1,20 @@
 package com.mitlerda.aryanne.mitlerdapriceconvertor.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.provider.FontsContract;
 import android.support.v7.widget.AppCompatEditText;
-import android.text.Editable;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.mitlerda.aryanne.mitlerdapriceconvertor.R;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.CouronneDivision;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.Division;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.LireDivision;
 import com.mitlerda.aryanne.mitlerdapriceconvertor.data.MarkDivision;
+import com.mitlerda.aryanne.mitlerdapriceconvertor.data.Monnaie;
 
 import java.math.BigDecimal;
 
@@ -52,7 +46,7 @@ public class FromEditor extends ViewGroup {
         this.context = context;
     }
 
-    public void updateField(Division division, TextView.OnEditorActionListener onEditorActionListener){
+    public void updateField(Division division, Monnaie monnaieType, TextView.OnEditorActionListener onEditorActionListener){
         removeAllViews();
         int count = 0;
         int width = getWidth();
@@ -63,19 +57,25 @@ public class FromEditor extends ViewGroup {
             count = CouronneDivision.values().length;
             childWidth = width / count - padding;
             for (int i = 0; i < count; i++){
-                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, CouronneDivision.values()[i]);
+                final CouronneDivision division1 = CouronneDivision.values()[i];
+                final String hint = division1.getNom(monnaieType.getIndexNom());
+                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, division1, hint);
                 addView(child);
             }
         }else if (division instanceof LireDivision){
             count = LireDivision.values().length;
             for (int i = 0; i < count; i++){
-                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, LireDivision.values()[i]);
+                final LireDivision division1 = LireDivision.values()[i];
+                final String hint = division1.getNom(monnaieType.getIndexNom());
+                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, division1, hint);
                 addView(child);
             }
         }else if(division instanceof MarkDivision){
             count = MarkDivision.values().length;
             for (int i = 0; i < count; i++){
-                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, MarkDivision.values()[i]);
+                final MarkDivision division1 = MarkDivision.values()[i];
+                final String hint = division1.getNom(monnaieType.getIndexNom());
+                DivisionEditor child = new DivisionEditor(context, onEditorActionListener, division1, hint);
                 addView(child);
             }
         }
@@ -134,29 +134,13 @@ public class FromEditor extends ViewGroup {
 
         private Division division;
 
-        public DivisionEditor(Context context, String hint) {
+        public DivisionEditor(Context context, TextView.OnEditorActionListener onEditorActionListener, Division division, String hint) {
             super(context);
+            this.division = division;
+            setOnEditorActionListener(onEditorActionListener);
             setInputType(InputType.TYPE_CLASS_NUMBER);
             setTypeface(Typeface.create("cursive", Typeface.NORMAL));
             setHint(hint);
-        }
-
-        public DivisionEditor(Context context, TextView.OnEditorActionListener onEditorActionListener, CouronneDivision division) {
-            this(context, division.name());
-            this.division = division;
-            setOnEditorActionListener(onEditorActionListener);
-        }
-
-        public DivisionEditor(Context context, TextView.OnEditorActionListener onEditorActionListener, LireDivision division) {
-            this(context, division.name());
-            this.division = division;
-            setOnEditorActionListener(onEditorActionListener);
-        }
-
-        public DivisionEditor(Context context, TextView.OnEditorActionListener onEditorActionListener, MarkDivision division) {
-            this(context, division.name());
-            this.division = division;
-            setOnEditorActionListener(onEditorActionListener);
         }
 
         public BigDecimal getValue(){

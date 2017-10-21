@@ -9,4 +9,5 @@ import java.math.BigDecimal;
 public interface Division {
     public BigDecimal toReference(BigDecimal value);
     public BigDecimal fromReference(BigDecimal value);
+    public String getNom(int index);
 }

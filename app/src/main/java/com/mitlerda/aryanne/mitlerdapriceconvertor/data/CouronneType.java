@@ -7,15 +7,17 @@ import java.math.BigDecimal;
  */
 
 public enum CouronneType implements Monnaie {
-    Couronnes("Couronnes", 1f);
+    Couronnes("Couronnes", 1f, 0),
+    Or("Or", 1f, 1);
 
     private String nom;
     private BigDecimal toCouronne;
+    private int indexNom;
 
-    CouronneType(String nom, float toCouronne) {
-
+    CouronneType(String nom, float toCouronne, int indexNom) {
         this.nom = nom;
         this.toCouronne = BigDecimal.valueOf(toCouronne);
+        this.indexNom = indexNom;
     }
 
     @Override
@@ -26,6 +28,11 @@ public enum CouronneType implements Monnaie {
     @Override
     public BigDecimal getToCouronne() {
         return toCouronne;
+    }
+
+    @Override
+    public int getIndexNom() {
+        return indexNom;
     }
 
     @Override

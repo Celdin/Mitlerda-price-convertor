@@ -7,25 +7,32 @@ import java.math.BigDecimal;
  */
 
 public enum LireType implements Monnaie {
-    LireMonavidienne("Lire monavidienne", 1.5f),
-    LivreSiennate("Livre siennate", 1.2f),
-    LivreGatz("Livre de Gatz", 1f),
-    LivreYorkbury("Livre de Yorkbury", 0.8f),
-    LivreHighwall("Livre de Highwall", 0.7f),
-    LivreCortezienne("Livre cortezienne", 1.1f);
+    LireMonavidienne("Lire monavidienne", 1.5f, 0),
+    LivreSiennate("Livre siennate", 1.2f, 1),
+    LivreGatz("Livre de Gatz", 1f, 1),
+    LivreYorkbury("Livre de Yorkbury", 0.8f, 1),
+    LivreHighwall("Livre de Highwall", 0.7f, 1),
+    LivreCortezienne("Livre cortezienne", 1.1f, 1);
 
     private String nom;
     private BigDecimal toCouronne;
+    private int indexNom;
 
-    LireType(String nom, float toCouronne) {
 
+    LireType(String nom, float toCouronne, int indexNom) {
         this.nom = nom;
         this.toCouronne = BigDecimal.valueOf(toCouronne);
+        this.indexNom = indexNom;
     }
 
     @Override
     public String getNom() {
         return nom;
+    }
+
+    @Override
+    public int getIndexNom() {
+        return indexNom;
     }
 
     @Override

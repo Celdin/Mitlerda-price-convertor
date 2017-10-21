@@ -11,6 +11,8 @@ public interface Monnaie {
 
     public BigDecimal getToCouronne();
 
+    public int getIndexNom();
+
     public BigDecimal toCouronne(BigDecimal value);
 
     public BigDecimal fromCouronne(BigDecimal value);

@@ -6,7 +6,7 @@ package com.mitlerda.aryanne.mitlerdapriceconvertor.data;
 
 public enum MonnaieType {
     Couronne(CouronneDivision.Couronne),
-    Mark(MarkDivision.mark),
+    Mark(MarkDivision.Mark),
     Lire(LireDivision.Lire);
 
     Division baseDivision;

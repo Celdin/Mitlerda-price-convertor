@@ -160,21 +160,21 @@ public class MainActivity extends AppCompatActivity {
             switch (to){
                 case Couronne:
                     for(CouronneDivision division : CouronneDivision.values()){
-                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        Result result1 = new Result(value, result, division, division.getNom(subTo.getIndexNom())).invoke();
                         value = result1.getValue();
                         result = result1.getResult();
                     }
                     break;
                 case Lire:
                     for(LireDivision division : LireDivision.values()){
-                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        Result result1 = new Result(value, result, division, division.getNom(subTo.getIndexNom())).invoke();
                         value = result1.getValue();
                         result = result1.getResult();
                     }
                     break;
                 case Mark:
                     for(MarkDivision division : MarkDivision.values()){
-                        Result result1 = new Result(value, result, division, division.name()).invoke();
+                        Result result1 = new Result(value, result, division, division.getNom(subTo.getIndexNom())).invoke();
                         value = result1.getValue();
                         result = result1.getResult();
                     }
@@ -224,13 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     case From:
                         setFrom(monnaieType);
                         setSubFrom(subMonnaie);
-                        fromEditor.updateField(monnaieType.getBaseDivision(), new TextView.OnEditorActionListener() {
-                            @Override
-                            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                                calcul();
-                                return false;
-                            }
-                        });
+                        updateField(monnaieType, subMonnaie);
                         break;
                     case To:
                         setTo(monnaieType);
@@ -246,6 +240,16 @@ public class MainActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView) {
             return;
         }
+    }
+
+    private void updateField(MonnaieType monnaieType, Monnaie subMonnaie) {
+        fromEditor.updateField(monnaieType.getBaseDivision(), subMonnaie, new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                calcul();
+                return false;
+            }
+        });
     }
 
     private class SubSpinnerListener implements AdapterView.OnItemSelectedListener {
@@ -273,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
             switch (entry) {
                 case From:
                     setSubFrom(subFrom);
+                    updateField(from, subFrom);
                     break;
                 case To:
                     setSubTo(subFrom);

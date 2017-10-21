@@ -7,18 +7,19 @@ import java.math.BigDecimal;
  */
 
 public enum MarkType implements Monnaie {
-    MarkPrartien("mark prartien", 0.02f),
-    MarkVennesien("mark vennesien", 0.08f),
-    MarkDen("mark den", 0.02f);
+    MarkPrartien("mark prartien", 0.02f, 0),
+    MarkVennesien("mark vennesien", 0.08f, 0),
+    MarkDen("mark den", 0.02f, 0);
 
     private String nom;
-
     private BigDecimal toCouronne;
+    private int indexNom;
 
-    MarkType(String nom, float toCouronne) {
+    MarkType(String nom, float toCouronne, int indexNom) {
 
         this.nom = nom;
         this.toCouronne = BigDecimal.valueOf(toCouronne);
+        this.indexNom = indexNom;
     }
 
     @Override
@@ -39,5 +40,10 @@ public enum MarkType implements Monnaie {
     @Override
     public BigDecimal fromCouronne(BigDecimal value) {
         return value.divide(getToCouronne(), 5, BigDecimal.ROUND_HALF_UP);
+    }
+
+    @Override
+    public int getIndexNom() {
+        return indexNom;
     }
 }
